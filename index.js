@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var karma = require('karma').server;
+var karma = require('karma').Server;
 var merge = require('merge');
 var openFile = require('open');
 var path = require('path');
@@ -79,14 +79,14 @@ function runKarma(config, karmaConfig, done) {
 		karmaConfig
 	);
 
-	karma.start(
+	var server = new karma(
 		karmaConfig,
 		function(exitCode) {
-			if (exitCode) {
-				console.log('Tests failed.');
-			}
-
 			done();
+
+			process.exit(exitCode);
 		}
 	);
+
+	server.start();
 }
